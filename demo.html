@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GTA VI Hero</title>
+    <link rel="preload" as="image" href="gta2.png">
+    <link rel="preload" as="image" href="gta3.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <noscript><style>.preloader{display:none!important}body.is-loading{overflow-x:hidden;overflow-y:auto}</style></noscript>
+</head>
+<body class="is-loading">
+
+<div class="preloader" id="preloader" role="status" aria-label="Loading Rockstar Games">
+    <div class="preloader-content">
+        <div class="preloader-mark" aria-hidden="true">R<span>★</span></div>
+        <div class="preloader-brand">ROCKSTAR <span>GAMES</span></div>
+        <div class="preloader-track" aria-hidden="true"><span></span></div>
+        <div class="preloader-caption">LOADING LEONIDA</div>
+    </div>
+</div>
+
+<header class="topbar">
+    <a class="brand" href="#home" aria-label="Grand Theft Auto VI home">
+        <img class="brand-logo" src="gta-vi-mark.png" alt="Grand Theft Auto VI">
+    </a>
+    <nav class="top-nav" aria-label="Main navigation">
+        <a href="#home">The game</a>
+        <a href="#story">Explore</a>
+        <a href="#trailer">Trailer</a>
+    </nav>
+    <a class="nav-cta" href="#play-now">Play now</a>
+</header>
+
+<main>
+<section class="hero hero--lighter" id="home">
+    <div class="hero-background is-active" data-slide="sunset"></div>
+    <div class="hero-background" data-slide="gas-station"></div>
+    <div class="overlay"></div>
+    <div class="content">
+        <div class="eyebrow">THE NEXT CHAPTER STARTS NOW</div>
+        <div class="location-tag">Leonida · Open world</div>
+        <div class="logo-wrapper">
+            <img src="logo.svg" alt="GTA Logo" class="gta-logo">
+            <span class="vi-neon" aria-label="Six">VI</span>
+        </div>
+        <p class="hero-description" id="story">
+            A city full of stories. A world built for your next move.
+            Welcome to Leonida.
+        </p>
+        <div class="hero-actions">
+            <a class="play-now" id="play-now" href="https://www.rockstargames.com/VI" target="_blank" rel="noopener">
+                Play now
+                <span aria-hidden="true">↗</span>
+            </a>
+            <a class="trailer-link" id="trailer" href="https://www.rockstargames.com/VI" target="_blank" rel="noopener">
+                <span class="play-icon" aria-hidden="true"></span>
+                Watch trailer
+            </a>
+        </div>
+    </div>
+    <a class="scroll-cue" href="#story">Explore the game</a>
+    <div class="slide-controls" aria-label="Background slides">
+        <button class="slide-arrow" id="slide-previous" type="button" aria-label="Previous background">‹</button>
+        <button class="slide-dot is-active" type="button" data-index="0" aria-label="Show sunset background"></button>
+        <button class="slide-dot" type="button" data-index="1" aria-label="Show neon gas station background"></button>
+        <button class="slide-arrow" id="slide-next" type="button" aria-label="Next background">›</button>
+    </div>
+</section>
+</main>
+<script>
+    const preloader = document.getElementById("preloader");
+    const preloaderStartedAt = performance.now();
+    let preloaderDismissed = false;
+
+    function dismissPreloader() {
+        if (preloaderDismissed) return;
+        preloaderDismissed = true;
+
+        const remainingTime = Math.max(0, 900 - (performance.now() - preloaderStartedAt));
+        window.setTimeout(() => {
+            preloader.classList.add("is-hidden");
+            preloader.setAttribute("aria-hidden", "true");
+            document.body.classList.remove("is-loading");
+            window.setTimeout(() => preloader.remove(), 650);
+        }, remainingTime);
+    }
+
+    if (document.readyState === "complete") {
+        dismissPreloader();
+    } else {
+        window.addEventListener("load", dismissPreloader, { once: true });
+    }
+    window.setTimeout(dismissPreloader, 4000);
+
+    const backgrounds = [...document.querySelectorAll(".hero-background")];
+    const slideDots = [...document.querySelectorAll(".slide-dot")];
+    let activeSlide = 0;
+    let slideTimer;
+
+    function showBackground(index) {
+        activeSlide = (index + backgrounds.length) % backgrounds.length;
+        backgrounds.forEach((background, currentIndex) => {
+            background.classList.toggle("is-active", currentIndex === activeSlide);
+        });
+        slideDots.forEach((dot, currentIndex) => {
+            dot.classList.toggle("is-active", currentIndex === activeSlide);
+        });
+        window.clearTimeout(slideTimer);
+        slideTimer = window.setTimeout(() => showBackground(activeSlide + 1), 7000);
+    }
+
+    slideDots.forEach((dot) => {
+        dot.addEventListener("click", () => showBackground(Number(dot.dataset.index)));
+    });
+    document.getElementById("slide-previous").addEventListener("click", () => showBackground(activeSlide - 1));
+    document.getElementById("slide-next").addEventListener("click", () => showBackground(activeSlide + 1));
+    showBackground(activeSlide);
+</script>
+</body>
+</html>

@@ -1,0 +1,738 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:"Inter", Arial, Helvetica, sans-serif;
+    overflow-x:hidden;
+    background:#090414;
+}
+
+body.is-loading{
+    overflow:hidden;
+}
+
+.preloader{
+    position:fixed;
+    inset:0;
+    z-index:1000;
+    display:grid;
+    place-items:center;
+    background:
+        radial-gradient(ellipse at 50% 42%, rgba(52,12,56,.48), transparent 42%),
+        #050407;
+    color:#fff;
+    opacity:1;
+    visibility:visible;
+    transition:opacity .6s ease, visibility .6s ease;
+}
+
+.preloader.is-hidden{
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+}
+
+.preloader-content{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    animation:preloaderEnter .7s cubic-bezier(.2,.7,.25,1) both;
+}
+
+@keyframes preloaderEnter{
+    from{opacity:0; transform:translateY(12px);}
+    to{opacity:1; transform:translateY(0);}
+}
+
+.preloader-mark{
+    position:relative;
+    width:76px;
+    height:76px;
+    display:grid;
+    place-items:center;
+    margin-bottom:18px;
+    border:1px solid rgba(255,255,255,.3);
+    border-radius:50%;
+    color:#fff;
+    font-size:48px;
+    font-style:italic;
+    font-weight:900;
+    line-height:1;
+    text-shadow:0 0 18px rgba(255,255,255,.22);
+}
+
+.preloader-mark::before{
+    content:"";
+    position:absolute;
+    inset:-4px;
+    border:1px solid transparent;
+    border-top-color:#ff45c5;
+    border-right-color:rgba(255,69,197,.45);
+    border-radius:50%;
+    animation:preloaderSpin 1.8s linear infinite;
+}
+
+.preloader-mark span{
+    position:absolute;
+    top:10px;
+    right:10px;
+    color:#ff55c9;
+    font-size:15px;
+    font-style:normal;
+    text-shadow:0 0 12px rgba(255,47,185,.75);
+}
+
+@keyframes preloaderSpin{
+    to{transform:rotate(360deg);}
+}
+
+.preloader-brand{
+    font-size:12px;
+    font-weight:900;
+    letter-spacing:.28em;
+}
+
+.preloader-brand span{
+    color:#ff70d5;
+}
+
+.preloader-track{
+    position:relative;
+    width:190px;
+    height:2px;
+    overflow:hidden;
+    margin-top:23px;
+    background:rgba(255,255,255,.18);
+}
+
+.preloader-track span{
+    position:absolute;
+    inset:0;
+    background:linear-gradient(90deg,#ff2fb9,#fff,#ff2fb9);
+    transform:scaleX(.05);
+    transform-origin:left;
+    animation:preloaderProgress 1.35s cubic-bezier(.6,.05,.35,1) infinite;
+}
+
+@keyframes preloaderProgress{
+    55%{transform:scaleX(.78);}
+    100%{transform:scaleX(1);}
+}
+
+.preloader-caption{
+    margin-top:12px;
+    color:rgba(255,255,255,.52);
+    font-size:8px;
+    font-weight:700;
+    letter-spacing:.25em;
+}
+
+.topbar{
+    position:absolute;
+    top:0;
+    left:0;
+    z-index:5;
+    width:100%;
+    min-height:82px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 7%;
+    background:linear-gradient(90deg, rgba(24,5,35,.94) 0%, rgba(45,10,54,.72) 28%, rgba(35,10,44,.24) 58%, rgba(35,10,44,0) 78%);
+}
+
+.topbar::after{
+    content:"";
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:0;
+    height:1px;
+    background:linear-gradient(90deg, rgba(255,255,255,.22), rgba(255,255,255,.08) 50%, transparent 100%);
+    pointer-events:none;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    color:#fff;
+    text-decoration:none;
+    font-weight:900;
+    font-size:12px;
+    line-height:1.05;
+    letter-spacing:.14em;
+}
+
+.brand-logo{
+    display:block;
+    width:104px;
+    height:70px;
+    object-fit:contain;
+    filter:drop-shadow(0 0 10px rgba(255,255,255,.12));
+    transition:filter .25s ease, transform .25s ease;
+}
+
+.brand:hover .brand-logo{
+    transform:scale(1.04);
+    filter:drop-shadow(0 0 16px rgba(255,47,185,.42));
+}
+
+.top-nav{
+    display:flex;
+    align-items:center;
+    gap:32px;
+}
+
+.top-nav a{
+    position:relative;
+    padding:8px 0;
+    color:rgba(255,255,255,.82);
+    text-decoration:none;
+    font-size:11px;
+    font-weight:800;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    transition:color .2s ease;
+}
+
+.top-nav a::after{
+    content:"";
+    position:absolute;
+    left:0;
+    right:100%;
+    bottom:0;
+    height:2px;
+    background:#ff2fb9;
+    box-shadow:0 0 10px #ff2fb9;
+    transition:right .25s ease;
+}
+
+.top-nav a:hover,
+.top-nav a:focus-visible{
+    color:#fff;
+}
+
+.top-nav a:hover::after,
+.top-nav a:focus-visible::after{
+    right:0;
+}
+
+.nav-cta{
+    padding:11px 16px;
+    border:1px solid rgba(255,255,255,.75);
+    border-radius:3px;
+    color:#fff;
+    text-decoration:none;
+    font-size:10px;
+    font-weight:900;
+    letter-spacing:.15em;
+    text-transform:uppercase;
+    transition:background .2s ease, border-color .2s ease, color .2s ease, transform .2s ease;
+}
+
+.nav-cta:hover{
+    transform:translateY(-2px);
+    border-color:#ff2fb9;
+    background:#ff2fb9;
+    color:#fff;
+}
+
+.hero{
+
+    width:100%;
+    height:100vh;
+
+    position:relative;
+
+    display:flex;
+    align-items:center;
+
+    padding:112px 8% 50px;
+    overflow:hidden;
+    isolation:isolate;
+}
+
+.hero-background{
+    position:absolute;
+    inset:0;
+    z-index:0;
+    background-position:center;
+    background-size:cover;
+    background-repeat:no-repeat;
+    opacity:0;
+    transform:scale(1.06);
+    transition:opacity 900ms ease, transform 7s linear;
+    will-change:transform;
+}
+
+.hero-background[data-slide="sunset"]{
+    background-image:url("gta2.png");
+}
+
+.hero-background[data-slide="gas-station"]{
+    background-image:url("gta3.png");
+    background-position:82% 55%;
+}
+
+.hero-background.is-active{
+    opacity:1;
+    transform:scale(1);
+}
+
+.hero-background[data-slide="sunset"].is-active{
+    animation:heroImageIn 1.4s cubic-bezier(.2,.7,.25,1) both;
+}
+
+@keyframes heroImageIn{
+    from{transform:scale(1.06);}
+    to{transform:scale(1);}
+}
+
+.overlay{
+
+    position:absolute;
+    inset:0;
+
+    background:linear-gradient(
+        to right,
+        rgba(4,3,12,.88) 0%,
+        rgba(4,3,12,.62) 34%,
+        rgba(4,3,12,.12) 72%,
+        rgba(4,3,12,.12) 100%
+    );
+    z-index:1;
+    pointer-events:none;
+}
+
+.hero--lighter .overlay{
+    background:linear-gradient(
+        to right,
+        rgba(4,3,12,.62) 0%,
+        rgba(4,3,12,.4) 34%,
+        rgba(4,3,12,.08) 72%,
+        rgba(4,3,12,.04) 100%
+    );
+}
+.content{
+    position:relative;
+    z-index:2;
+    color:white;
+    width:min(620px, 100%);
+    text-align:left;
+    animation:contentIn .85s .12s cubic-bezier(.2,.7,.25,1) both;
+}
+
+.eyebrow{
+    display:inline-flex;
+    margin-bottom:18px;
+    padding:8px 14px;
+    border:1px solid rgba(255,255,255,.28);
+    border-radius:999px;
+    background:rgba(8,5,18,.42);
+    backdrop-filter:blur(10px);
+    font-size:12px;
+    font-weight:800;
+    letter-spacing:.28em;
+}
+
+.location-tag{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    margin:4px 0 15px;
+    color:rgba(255,255,255,.7);
+    font-size:10px;
+    font-weight:700;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+}
+
+.location-tag::before{
+    content:"";
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:#ff2fb9;
+    box-shadow:0 0 12px #ff2fb9;
+}
+
+@keyframes contentIn{
+    from{ opacity:0; transform:translateY(24px); }
+    to{ opacity:1; transform:translateY(0); }
+}
+
+/* GTA Logo */
+.gta-logo{
+    width:320px;
+    display:block;
+    margin-bottom:-10px;
+    filter:
+        drop-shadow(0 0 8px rgba(255,255,255,.25))
+        drop-shadow(0 0 20px rgba(255,255,255,.15));
+}
+
+.logo-wrapper{
+    position:relative;
+    display:inline-block;
+    overflow:visible;
+}
+
+.hero-description{
+    max-width:390px;
+    margin-top:12px;
+    color:rgba(255,255,255,.76);
+    font-size:13px;
+    line-height:1.55;
+}
+
+ .vi-neon {
+    position: absolute;
+     font-size: 74px;
+      left: 72%;
+     top: calc(100% - 82px);
+    font-weight: 900;
+      color: #ffffff;
+      background:linear-gradient(180deg,#fff 0%,#fff 42%,#ffd1ef 70%,#ff69d0 100%);
+      -webkit-background-clip:text;
+      background-clip:text;
+      -webkit-text-fill-color:transparent;
+      -webkit-text-stroke:3px #ff39c5;
+    line-height: 1;
+     paint-order: stroke fill;
+     text-shadow:
+         0 0 3px rgba(255,225,249,.8),
+         0 0 8px #ff00de,
+         0 0 18px #ff00de,
+         0 0 32px rgba(255,0,200,.72);
+     filter:drop-shadow(0 0 5px rgba(255,0,200,.72));
+      animation:flicker 4.5s steps(1,end) infinite;
+}
+
+@keyframes flicker{
+    0%, 18%, 22%, 25%, 53%, 57%, 100%{
+        color:#ffb6e8;
+        text-shadow:
+            0 0 3px rgba(255,223,248,.7),
+            0 0 9px #ff00de,
+            0 0 18px #ff00de,
+            0 0 26px rgba(255,0,200,.78);
+        filter:drop-shadow(0 0 6px rgba(255,255,255,.85)) drop-shadow(0 0 20px rgba(255,0,220,.95)) drop-shadow(0 0 38px rgba(255,0,200,.78));
+        opacity:1;
+    }
+    20%, 24%, 55%{
+        color:#ff80d6;
+        text-shadow:
+            0 0 2px rgba(255,172,226,.5),
+            0 0 6px rgba(255,0,200,.68);
+        filter:drop-shadow(0 0 2px rgba(255,0,200,.6));
+        opacity:.72;
+    }
+}
+
+.release-status strong{
+    color:#fff;
+    font-size:20px;
+    line-height:1;
+    letter-spacing:.25em;
+    text-shadow:0 0 14px rgba(255,47,185,.55);
+    animation:statusGlow 2s ease-in-out infinite;
+}
+
+@keyframes statusGlow{
+    50%{
+        color:#ffb5e9;
+        text-shadow:0 0 8px rgba(255,47,185,.85), 0 0 24px rgba(255,47,185,.55);
+    }
+}
+
+.hero-actions{
+    display:flex;
+    align-items:center;
+    gap:18px;
+    margin-top:18px;
+    flex-wrap:wrap;
+    animation:detailIn .7s .48s cubic-bezier(.2,.7,.25,1) both;
+}
+
+@keyframes detailIn{
+    from{opacity:0; transform:translateY(14px);}
+    to{opacity:1; transform:translateY(0);}
+}
+
+.play-now{
+    min-height:50px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:20px;
+    padding:0 20px;
+    border:1px solid #fff;
+    border-radius:3px;
+    background:linear-gradient(110deg,#ff2fb9,#d9128f);
+    color:#fff;
+    text-decoration:none;
+    font-size:11px;
+    font-weight:900;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    box-shadow:0 0 0 3px rgba(255,255,255,.12), 0 0 25px rgba(255,47,185,.38);
+    animation:playGlow 2.4s ease-in-out infinite;
+    transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+}
+
+.play-now span{
+    font-size:18px;
+    line-height:1;
+    transition:transform .2s ease;
+}
+
+.play-now:hover{
+    transform:translateY(-3px) scale(1.02);
+    border-color:#fff;
+    box-shadow:0 0 0 4px rgba(255,255,255,.2), 0 0 34px rgba(255,47,185,.68);
+    animation:none;
+}
+
+.play-now:hover span{
+    transform:translate(3px,-3px);
+}
+
+@keyframes playGlow{
+    50%{box-shadow:0 0 0 3px rgba(255,255,255,.18), 0 0 34px rgba(255,47,185,.58);}
+}
+
+.trailer-link{
+    display:inline-flex;
+    align-items:center;
+    gap:12px;
+    min-height:48px;
+    padding:0 18px;
+    border:1px solid #fff;
+    border-radius:3px;
+    color:#fff;
+    text-decoration:none;
+    font-size:10px;
+    font-weight:900;
+    letter-spacing:.17em;
+    text-transform:uppercase;
+    transition:all .22s ease;
+}
+
+.trailer-link:hover{
+    transform:translateY(-3px);
+    border-color:#ff2fb9;
+    background:#ff2fb9;
+    box-shadow:0 8px 28px rgba(255,47,185,.35);
+}
+
+.play-icon{
+    width:21px;
+    height:21px;
+    display:grid;
+    place-items:center;
+    border:1px solid currentColor;
+    border-radius:50%;
+}
+
+.play-icon::after{
+    content:"";
+    margin-left:2px;
+    border-left:6px solid currentColor;
+    border-top:4px solid transparent;
+    border-bottom:4px solid transparent;
+}
+
+.scroll-cue{
+    position:absolute;
+    z-index:2;
+    left:7%;
+    bottom:28px;
+    display:flex;
+    align-items:center;
+    gap:11px;
+    color:rgba(255,255,255,.75);
+    font-size:11px;
+    font-weight:800;
+    letter-spacing:.2em;
+    text-decoration:none;
+    text-transform:uppercase;
+}
+
+.scroll-cue::before{
+    content:"";
+    width:34px;
+    height:1px;
+    background:#ff2fb9;
+    box-shadow:0 0 10px #ff2fb9;
+    animation:cuePulse 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes cuePulse{
+    to{width:54px; opacity:.5;}
+}
+
+.slide-controls{
+    position:absolute;
+    z-index:3;
+    right:7%;
+    bottom:22px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:9px 12px;
+    border:1px solid rgba(255,255,255,.22);
+    border-radius:999px;
+    background:rgba(0,0,0,.42);
+    backdrop-filter:blur(14px);
+}
+
+.slide-controls button{
+    display:grid;
+    place-items:center;
+    padding:0;
+    border:0;
+    color:#fff;
+    cursor:pointer;
+}
+
+.slide-arrow{
+    width:28px;
+    height:28px;
+    border-radius:50%;
+    background:rgba(255,255,255,.08);
+    font-size:22px;
+    line-height:1;
+    transition:background .2s ease, color .2s ease, transform .2s ease;
+}
+
+.slide-arrow:hover{
+    transform:scale(1.08);
+    background:#ff2fb9;
+}
+
+.slide-dot{
+    width:7px;
+    height:7px;
+    border-radius:999px;
+    background:rgba(255,255,255,.5);
+    transition:width .25s ease, background .25s ease, box-shadow .25s ease;
+}
+
+.slide-dot.is-active{
+    width:24px;
+    background:#ff2fb9;
+    box-shadow:0 0 12px rgba(255,47,185,.75);
+}
+
+@media (max-width: 768px){
+    .topbar{
+        min-height:68px;
+        padding:0 6%;
+    }
+
+    .top-nav{
+        gap:14px;
+    }
+
+    .top-nav a{
+        font-size:8px;
+        letter-spacing:.08em;
+    }
+
+    .nav-cta{
+        display:none;
+    }
+
+    .hero{
+        min-height:680px;
+        height:100svh;
+        padding:100px 6% 46px;
+        align-items:center;
+    }
+
+    .hero-background{
+        background-position:58% center;
+    }
+
+    .hero-background[data-slide="gas-station"]{
+        background-position:64% center;
+    }
+
+    .slide-controls{
+        right:6%;
+        bottom:14px;
+        gap:7px;
+        padding:6px 8px;
+    }
+
+    .scroll-cue{
+        left:6%;
+        bottom:22px;
+    }
+
+    .slide-arrow{
+        width:25px;
+        height:25px;
+    }
+
+    .gta-logo{
+        width:min(280px, 76vw);
+    }
+
+    .vi-neon{
+        left:72%;
+        top:calc(100% - 74px);
+        font-size:66px;
+        -webkit-text-stroke-width:3px;
+    }
+
+    .hero-description{
+        max-width:340px;
+        font-size:12px;
+        margin-top:10px;
+    }
+
+    .hero-actions{
+        margin-top:16px;
+    }
+
+    .scroll-cue{
+        display:none;
+    }
+
+    .slide-controls{
+        right:50%;
+        transform:translateX(50%);
+    }
+}
+
+@media (max-width: 420px){
+    .top-nav{
+        gap:10px;
+    }
+
+    .top-nav a{
+        font-size:7px;
+    }
+
+    .brand-logo{
+        width:82px;
+        height:56px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce){
+    *,
+    *::before,
+    *::after{
+        animation-duration:.01ms !important;
+        animation-iteration-count:1 !important;
+        scroll-behavior:auto !important;
+        transition-duration:.01ms !important;
+    }
+}
+  
